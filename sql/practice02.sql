@@ -8,10 +8,11 @@ select max(salary)as '최고임금', min(salary) as '최저임금', max(salary)-
 select date_format(hire_date,'%Y년 %m월 %d일' ) from employees order by TIMESTAMPDIFF (YEAR, hire_date, CURDATE()) desc limit 1;
 
 -- 문제 4:현재 이 회사의 평균 연봉은 얼마입니까?
-select avg(salary) from salaries where to_date>now();
+select floor(avg(salary)) from salaries where to_date>now();
 
 -- 문제 5:현재 이 회사의 최고/최저 연봉은 얼마입니까?
 select max(salary),min(salary) from salaries where to_date>now();
 
 -- 문제 6:최고 어린 사원의 나이와 최 연장자의 나이는?
-SELECT max(TIMESTAMPDIFF (YEAR, birth_date, CURDATE())) as '최고연장자',min(TIMESTAMPDIFF (YEAR, birth_date, CURDATE())) as '최저연소자' FROM employees AS AGE
+SELECT max(TIMESTAMPDIFF (YEAR, birth_date, curdate()))+1 as '최고연장자',min(TIMESTAMPDIFF (YEAR, birth_date, curdate()))+1 as '최저연소자' from employees;
+
