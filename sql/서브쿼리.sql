@@ -53,6 +53,46 @@ group by title order by avg(salary);
             AND b.to_date = '9999-01-01'
     GROUP BY title
     ORDER BY AVG(salary) limit 1;
+    
+    
+    
+
+-- 다중행  서브쿼리
+-- =any (in 과 완전 동일) >any, <>any, <= any ....
+-- all 
+-- all, >all, <all, <>all,....   단일행에서 사용
+
+select emp_no,salary
+from salaries 
+where salary in(  100, 200,30);
+
+-- ex)
+
+select concat(a.first_name,' ',a.last_name),b.salary
+from employees a, salaries b
+where 
+a.emp_no=b.emp_no
+and (a.emp_no,b.salary)=any (
+select a.emp_no,a.salary
+from salaries a 
+where a.to_date='9999-01-01'
+and a.salary > 50000
+);
+
+SELECT 
+    CONCAT(a.first_name, ' ', a.last_name), b.salary
+FROM
+    employees a,
+    (SELECT 
+        emp_no, salary
+    FROM
+        salaries a
+    WHERE
+        a.to_date = '9999-01-01'
+            AND a.salary > 50000) b
+            WHERE  a.emp_no=b.emp_no;
+
+
 
 
 
