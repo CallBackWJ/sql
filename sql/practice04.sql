@@ -103,11 +103,12 @@ select b.title
     order by avg(salary) desc limit 1;
 
 
+
+
 -- 문제8.현재 자신의 매니저보다 높은 연봉을 받고 있는 직원은? 부서이름, 사원이름, 연봉, 매니저 이름, 메니저 연봉 순으로 출력합니다.
   
 
-
-select d.dept_name as 부서, concat(a.first_name,' ',a.last_name) as 이름, b.salary as 연봉, e.name as 매니저이름
+select d.dept_name as 부서, concat(a.first_name,' ',a.last_name) as 이름, b.salary as 연봉, e.name as 매니저이름,e.salary as 매니저연봉
 from employees a join salaries b join dept_emp c join departments d join
 (select a.emp_no as emp_no,b.dept_no as dept_no,c.salary as salary, concat(a.first_name,' ',a.last_name) as name
 from employees a join dept_manager b join salaries c on(a.emp_no=b.emp_no and a.emp_no=c.emp_no)
@@ -116,4 +117,6 @@ where b.to_date='9999-01-01' and c.to_date='9999-01-01'
  on(a.emp_no=b.emp_no and a.emp_no=c.emp_no and c.dept_no=d.dept_no and c.dept_no=e.dept_no)
 where 
 b.to_date='9999-01-01' and c.to_date='9999-01-01'
-and b.salary>e.salary;
+and b.salary>e.salary
+order by e.salary desc;
+
